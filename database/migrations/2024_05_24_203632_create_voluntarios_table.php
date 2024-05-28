@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('dias', function (Blueprint $table) {
+        Schema::create('voluntarios', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->string('email')->unique();
+            $table->unsignedBigInteger('igreja_id');
+            $table->foreign('igreja_id')->references('id')->on('igrejas');
+            $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dias');
+        Schema::dropIfExists('voluntarios');
     }
 };

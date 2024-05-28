@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('setor_igrejas', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('igreja_id')->index();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('igreja_id')->nullable();
             $table->foreign('igreja_id')->references('id')->on('igrejas');
-            $table->bigInteger('nome');
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -28,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setor_igrejas');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['igreja_id']);
+            $table->dropColumn('igreja_id');
+        });
     }
 };
