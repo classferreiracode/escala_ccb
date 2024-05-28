@@ -11,7 +11,7 @@ class IgrejasTable extends Component
 {
     public $igrejas;
 
-    private $igreja;
+    public $igreja;
 
     public $nome;
 
@@ -88,6 +88,8 @@ class IgrejasTable extends Component
         if ($this->igreja) {
             $this->modalEdit = false;
         }
+
+        $this->reset(['nome', 'endereco']);
 
         $this->igrejas = Igreja::all();
     }
